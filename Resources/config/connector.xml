@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+
+        <parameter key="integrated_twitter.connector.twitter.class">Integrated\Bundle\SocialBundle\Connector\TwitterAdapter</parameter>
+        <parameter key="integrated_facebook.connector.facebook.class">Integrated\Bundle\SocialBundle\Connector\FacebookAdapter</parameter>
+
+    </parameters>
+
+    <services>
+
+        <service id="integrated_twitter.connector.twitter" class="%integrated_twitter.connector.twitter.class%">
+            <tag name="integrated_channel.connector" />
+            <argument type="service" id="service_container"/>
+        </service>
+
+        <service id="integrated_facebook.connector.facebook" class="%integrated_facebook.connector.facebook.class%">
+            <tag name="integrated_channel.connector" />
+            <argument type="service" id="service_container"/>
+        </service>
+
+    </services>
+
+</container>
