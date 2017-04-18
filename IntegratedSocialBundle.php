@@ -15,9 +15,6 @@ use Integrated\Bundle\SocialBundle\DependencyInjection\IntegratedSocialExtension
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-/**
- * @author Jan Sanne Mulder <jansanne@e-active.nl>
- */
 class IntegratedSocialBundle extends Bundle
 {
     /**

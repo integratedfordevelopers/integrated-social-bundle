@@ -13,9 +13,6 @@ namespace Integrated\Bundle\SocialBundle\Connector;
 
 use Integrated\Common\Channel\Connector\Adapter\ManifestInterface;
 
-/**
- * @author Jan Sanne Mulder <jansanne@e-active.nl>
- */
 class FacebookManifest implements ManifestInterface
 {
     /**

@@ -18,9 +18,6 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-/**
- * @author Jan Sanne Mulder <jansanne@e-active.nl>
- */
 class IntegratedSocialExtension extends Extension
 {
     /**

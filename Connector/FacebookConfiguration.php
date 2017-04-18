@@ -12,11 +12,8 @@
 namespace Integrated\Bundle\SocialBundle\Connector;
 
 use Integrated\Common\Channel\Connector\ConfigurationInterface;
-use Symfony\Component\Form\FormTypeInterface;
+use Integrated\Bundle\SocialBundle\Form\Type\FacebookType;
 
-/**
- * @author Jan Sanne Mulder <jansanne@e-active.nl>
- */
 class FacebookConfiguration implements ConfigurationInterface
 {
     /**
@@ -24,6 +21,6 @@ class FacebookConfiguration implements ConfigurationInterface
      */
     public function getForm()
     {
-        return 'integrated_facebook_tokens';
+        return FacebookType::class;
     }
 }

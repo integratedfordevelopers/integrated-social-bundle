@@ -13,19 +13,23 @@ namespace Integrated\Bundle\SocialBundle\Connector;
 
 use Integrated\Bundle\ContentBundle\Document\Content\Article;
 use Integrated\Common\Channel\ChannelInterface;
+use Integrated\Common\Channel\Connector\Config\OptionsInterface;
 use Integrated\Common\Channel\Exporter\ExporterInterface;
-use AppBundle\Twitter\Oauth;
+use Integrated\Bundle\SocialBundle\Social\Twitter\Oauth;
 
-/**
- * @author Jan Sanne Mulder <jansanne@e-active.nl>
- */
 class TwitterExporter implements ExporterInterface
 {
+    /**
+     * @var OptionsInterface
+     */
     private $options;
 
+    /**
+     * @var Oauth
+     */
     private $twitter;
 
-    public function __construct($option, Oauth $twitter)
+    public function __construct(OptionsInterface $option, Oauth $twitter)
     {
         $this->options = $option;
         $this->twitter = $twitter;
@@ -36,11 +40,12 @@ class TwitterExporter implements ExporterInterface
      */
     public function export($content, $state, ChannelInterface $channel)
     {
-        if($content instanceof Article)
+        if ($content instanceof Article)
         {
-            $tweet = $content->getTitle() . " http://". $channel->getPrimaryDomain() ."/content/article/" . $content->getSlug() . ".html";
+            //TODO remove hardcoded URL when INTEGRATED-572 is fixed
+            $tweet = $content->getTitle() . " http://". $channel->getPrimaryDomain() ."/content/article/" . $content->getSlug();
 
-            return $this->twitter->tweet($this->options["token"], $this->options["token_secret"], $tweet);
+            $this->twitter->tweet($this->options["token"], $this->options["token_secret"], $tweet);
         }
     }
 }

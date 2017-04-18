@@ -12,11 +12,8 @@
 namespace Integrated\Bundle\SocialBundle\Connector;
 
 use Integrated\Common\Channel\Connector\ConfigurationInterface;
-use Symfony\Component\Form\FormTypeInterface;
+use Integrated\Bundle\SocialBundle\Form\Type\TokenType;
 
-/**
- * @author Jan Sanne Mulder <jansanne@e-active.nl>
- */
 class TwitterConfiguration implements ConfigurationInterface
 {
     /**
@@ -24,8 +21,6 @@ class TwitterConfiguration implements ConfigurationInterface
      */
     public function getForm()
     {
-//        dump($this->getForm()->getParent());
-
-        return 'integrated_twitter_tokens';
+        return TokenType::class;
     }
 }

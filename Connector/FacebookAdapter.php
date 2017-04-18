@@ -16,11 +16,8 @@ use Integrated\Common\Channel\Connector\Config\OptionsInterface;
 use Integrated\Common\Channel\Connector\ConfigurableInterface;
 
 use Integrated\Common\Channel\Exporter\ExportableInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Integrated\Bundle\SocialBundle\Social\Facebook\Oauth;
 
-/**
- * @author Jan Sanne Mulder <jansanne@e-active.nl>
- */
 class FacebookAdapter implements AdapterInterface, ConfigurableInterface, ExportableInterface
 {
     /**
@@ -39,13 +36,17 @@ class FacebookAdapter implements AdapterInterface, ConfigurableInterface, Export
     private $exporter = null;
 
     /**
-     * @var ContainerInterface
+     * @var Oauth
      */
-    private $container;
+    private $oauth;
 
-    public function __construct(ContainerInterface $container)
+    /**
+     * FacebookAdapter constructor.
+     * @param Oauth $oauth
+     */
+    public function __construct(Oauth $oauth)
     {
-        $this->container = $container;
+        $this->oauth = $oauth;
     }
 
     /**
@@ -78,7 +79,7 @@ class FacebookAdapter implements AdapterInterface, ConfigurableInterface, Export
     public function getExporter(OptionsInterface $options)
     {
         if (null === $this->exporter) {
-            $this->exporter = new FacebookExporter($options, $this->container->get("app.facebook_oauth"));
+            $this->exporter = new FacebookExporter($options, $this->oauth);
         }
 
         return $this->exporter;

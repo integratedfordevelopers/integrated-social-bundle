@@ -14,9 +14,6 @@ namespace Integrated\Bundle\SocialBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * @author Jan Sanne Mulder <jansanne@e-active.nl>
- */
 class TokenType extends AbstractType
 {
     /**
@@ -31,8 +28,8 @@ class TokenType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
-        return 'integrated_twitter_tokens';
+        return "integrated_twitter_token";
     }
 }

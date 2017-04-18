@@ -14,9 +14,6 @@ namespace Integrated\Bundle\SocialBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * @author Jan Sanne Mulder <jansanne@e-active.nl>
- */
 class FacebookType extends AbstractType
 {
     /**
@@ -28,11 +25,8 @@ class FacebookType extends AbstractType
         $builder->add('access_token', 'text', ['attr' => ['readonly' => 'true']]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getBlockPrefix()
     {
-        return 'integrated_facebook_tokens';
+        return 'integrated_facebook_token';
     }
 }

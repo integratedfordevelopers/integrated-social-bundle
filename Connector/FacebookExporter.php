@@ -13,19 +13,23 @@ namespace Integrated\Bundle\SocialBundle\Connector;
 
 use Integrated\Bundle\ContentBundle\Document\Content\Article;
 use Integrated\Common\Channel\ChannelInterface;
+use Integrated\Common\Channel\Connector\Config\OptionsInterface;
 use Integrated\Common\Channel\Exporter\ExporterInterface;
-use AppBundle\Facebook\Oauth;
+use Integrated\Bundle\SocialBundle\Social\Facebook\Oauth;
 
-/**
- * @author Jan Sanne Mulder <jansanne@e-active.nl>
- */
 class FacebookExporter implements ExporterInterface
 {
+    /**
+     * @var OptionsInterface
+     */
     private $options;
 
+    /**
+     * @var Oauth
+     */
     private $facebook;
 
-    public function __construct($options, Oauth $facebook)
+    public function __construct(OptionsInterface $options, Oauth $facebook)
     {
         $this->options = $options;
         $this->facebook = $facebook;
@@ -36,12 +40,12 @@ class FacebookExporter implements ExporterInterface
      */
     public function export($content, $state, ChannelInterface $channel)
     {
-        if($content instanceof Article)
+        if ($content instanceof Article)
         {
-            $message = $content->getTitle();
-            $link = "http://". $channel->getPrimaryDomain() ."/content/article/" . $content->getSlug() . ".html";
+            //TODO remove hardcoded URL when INTEGRATED-572 is fixed
+            $link = "http://". $channel->getPrimaryDomain() . "/content/article/" . $content->getSlug();
 
-            return $this->facebook->post($this->options["user_id"], $this->options["access_token"], $link, $message);
+            $this->facebook->post($this->options["user_id"], $this->options["access_token"], $link, $content->getTitle());
         }
     }
 }
