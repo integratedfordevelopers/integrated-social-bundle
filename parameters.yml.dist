@@ -1,0 +1,36 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     integrated
+    database_user:     integrated
+    database_password: integrated
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+    mailer_from:       ~
+    mailer_name:       ~
+
+    locale:            en
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    mongodb_server:    mongodb://localhost:27017
+    mongodb_database:  integrated
+    mongodb_options:   {db: integrated}
+
+    solr_host:         ~
+    solr_port:         ~
+    solr_core:         ~
+    solr_timeout:      30
+
+    bower_bin:         /usr/local/bin/bower
+
+    recaptcha_site_key: ~
+    recaptcha_secret_key: ~
+
+    consumer_key: "HvMOwtOblqW2fBCtfW3bRUJy7"
+    consumer_key_secret: "kVQFCNj6aFUhqwgSrLVRwTkuOuiaLq1jVQVlp0yDi8mwN4WKtq"
+    app_id: "187620181726348"
+    app_id_secret: "c4a8779f4036c30797da55c76f4044c8"
