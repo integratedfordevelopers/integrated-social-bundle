@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Integrated\Bundle\SocialBundle\Connector;
+namespace Integrated\Bundle\SocialBundle\Connector\Exporter;
 
 use Integrated\Bundle\ContentBundle\Document\Content\Article;
 use Integrated\Common\Channel\ChannelInterface;
 use Integrated\Common\Channel\Connector\Config\OptionsInterface;
 use Integrated\Common\Channel\Exporter\ExporterInterface;
-use Integrated\Bundle\SocialBundle\Social\Facebook\Oauth;
+use Integrated\Bundle\SocialBundle\Social\Twitter\Oauth;
 
-class FacebookExporter implements ExporterInterface
+class TwitterExporter implements ExporterInterface
 {
     /**
      * @var OptionsInterface
@@ -27,12 +27,12 @@ class FacebookExporter implements ExporterInterface
     /**
      * @var Oauth
      */
-    private $facebook;
+    private $twitter;
 
-    public function __construct(OptionsInterface $options, Oauth $facebook)
+    public function __construct(OptionsInterface $option, Oauth $twitter)
     {
-        $this->options = $options;
-        $this->facebook = $facebook;
+        $this->options = $option;
+        $this->twitter = $twitter;
     }
 
     /**
@@ -40,12 +40,11 @@ class FacebookExporter implements ExporterInterface
      */
     public function export($content, $state, ChannelInterface $channel)
     {
-        if ($content instanceof Article)
-        {
+        if ($content instanceof Article) {
             //TODO remove hardcoded URL when INTEGRATED-572 is fixed
-            $link = "http://". $channel->getPrimaryDomain() . "/content/article/" . $content->getSlug();
+            $tweet = $content->getTitle() . " http://" . $channel->getPrimaryDomain() . "/content/article/" . $content->getSlug();
 
-            $this->facebook->post($this->options["user_id"], $this->options["access_token"], $link, $content->getTitle());
+            $this->twitter->tweet($this->options["token"], $this->options["token_secret"], $tweet);
         }
     }
 }

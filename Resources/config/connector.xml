@@ -6,12 +6,12 @@
 
     <services>
 
-        <service id="integrated_twitter.connector.twitter" class="Integrated\Bundle\SocialBundle\Connector\TwitterAdapter">
+        <service id="integrated_twitter.connector.twitter" class="Integrated\Bundle\SocialBundle\Connector\Configuration\TwitterConfiguration">
             <argument type="service" id="app.twitter_oauth"/>
             <tag name="integrated_channel.connector" />
         </service>
 
-        <service id="integrated_facebook.connector.facebook" class="Integrated\Bundle\SocialBundle\Connector\FacebookAdapter">
+        <service id="integrated_facebook.connector.facebook" class="Integrated\Bundle\SocialBundle\Connector\Configuration\FacebookConfiguration">
             <argument type="service" id="app.facebook_oauth"/>
             <tag name="integrated_channel.connector" />
         </service>
