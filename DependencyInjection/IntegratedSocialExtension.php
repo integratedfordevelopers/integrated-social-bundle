@@ -21,7 +21,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class IntegratedSocialExtension extends Extension
 {
     /**
-     * {@inheritdoc}
+     * @param array $config
+     * @param ContainerBuilder $container
      */
     public function load(array $config, ContainerBuilder $container)
     {

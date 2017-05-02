@@ -5,12 +5,16 @@
 
     <services>
         <service id="app.twitter_oauth" class="Integrated\Bundle\SocialBundle\Social\Twitter\Oauth">
-            <argument type="service" id="service_container"/>
+            <argument key="consumer_key">%consumer_key%</argument>
+            <argument key="consumer_key_secret">%consumer_key_secret%</argument>
             <argument type="service" id="session"/>
+            <argument type="service" id="request_stack"/>
         </service>
 
         <service id="app.facebook_oauth" class="Integrated\Bundle\SocialBundle\Social\Facebook\Oauth">
-            <argument type="service" id="service_container"/>
+            <argument key="app_id">%app_id%</argument>
+            <argument key="app_id_secret">%app_id_secret%</argument>
+            <argument type="service" id="request_stack"/>
         </service>
     </services>
 </container>

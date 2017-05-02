@@ -12,19 +12,19 @@
 namespace Integrated\Bundle\SocialBundle\Social\Twitter;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Integrated\Bundle\SocialBundle\Oauth\OauthInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class Oauth
  * @package Integrated\Bundle\SocialBundle\Social\Twitter
  */
-class Oauth
+class Oauth implements OauthInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    private $consumer_key;
+
+    private $consumer_key_secret;
 
     /**
      * @var SessionInterface
@@ -32,17 +32,30 @@ class Oauth
     private $session;
 
     /**
-     * Oauth constructor.
-     * @param ContainerInterface $container
-     * @param SessionInterface $session
+     * @var RequestStack
      */
-    public function __construct(ContainerInterface $container, SessionInterface $session)
-    {
-        $this->container = $container;
-        $this->session = $session;
-    }
+    private $requestStack;
 
     /**
+     * Oauth constructor.
+     * @param $consumer_key
+     * @param $consumer_key_secret
+     * @param SessionInterface $session
+     * @param RequestStack $requestStack
+     */
+    public function __construct(
+        $consumer_key,
+        $consumer_key_secret,
+        SessionInterface $session,
+        RequestStack $requestStack
+    ) {
+        $this->consumer_key = $consumer_key;
+        $this->consumer_key_secret = $consumer_key_secret;
+        $this->session = $session;
+        $this->requestStack = $requestStack->getCurrentRequest();
+    }
+
+/**
      * @param $connector
      * @param $admin_url
      * @return string
@@ -52,14 +65,24 @@ class Oauth
     public function login($connector, $admin_url)
     {
         $twitteroauth = new TwitterOAuth(
-            $this->container->getParameter("consumer_key"),
-            $this->container->getParameter("consumer_key_secret")
+            $this->consumer_key,
+            $this->consumer_key_secret
         );
+
+        $this->requestStack = $this->requestStack->createFromGlobals();
 
         // request token of application
         $request_token = $twitteroauth->oauth(
             'oauth/request_token',
-            ['oauth_callback' => "http://".$_SERVER["SERVER_NAME"].":8080/".$admin_url.'/connector/config/'.$connector]
+            [
+                'oauth_callback' => $this->requestStack->server->get('REQUEST_SCHEME')
+                . "://"
+                . $this->requestStack->server->get('HTTP_HOST')
+                . "/"
+                . $admin_url
+                . '/connector/config/'
+                . $connector
+            ]
         );
 
         // throw exception if something gone wrong
@@ -98,8 +121,8 @@ class Oauth
 
         // request user token
         $connection = new TwitterOAuth(
-            $this->container->getParameter("consumer_key"),
-            $this->container->getParameter("consumer_key_secret"),
+            $this->consumer_key,
+            $this->consumer_key_secret,
             $this->session->get('oauth_token'),
             $this->session->get('oauth_token_secret')
         );
@@ -119,8 +142,8 @@ class Oauth
     public function tweet($token, $token_secret, $content)
     {
         $twitter = new TwitterOAuth(
-            $this->container->getParameter("consumer_key"),
-            $this->container->getParameter("consumer_key_secret"),
+            $this->consumer_key,
+            $this->consumer_key_secret,
             $token,
             $token_secret
         );

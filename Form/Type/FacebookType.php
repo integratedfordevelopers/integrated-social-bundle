@@ -17,7 +17,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 class FacebookType extends AbstractType
 {
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $builder
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -25,6 +26,9 @@ class FacebookType extends AbstractType
         $builder->add('access_token', 'text', ['attr' => ['readonly' => 'true']]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'integrated_facebook_token';

@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class IntegratedSocialBundle extends Bundle
 {
     /**
-     * {@inheritdoc}
+     * @return IntegratedSocialExtension
      */
     public function getContainerExtension()
     {

@@ -29,6 +29,11 @@ class FacebookExporter implements ExporterInterface
      */
     private $facebook;
 
+    /**
+     * FacebookExporter constructor.
+     * @param OptionsInterface $options
+     * @param Oauth $facebook
+     */
     public function __construct(OptionsInterface $options, Oauth $facebook)
     {
         $this->options = $options;
@@ -36,13 +41,16 @@ class FacebookExporter implements ExporterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param object $content
+     * @param string $state
+     * @param ChannelInterface $channel
+     * @throws \Exception
      */
     public function export($content, $state, ChannelInterface $channel)
     {
         if ($content instanceof Article) {
             //TODO remove hardcoded URL when INTEGRATED-572 is fixed
-            $link = "http://". $channel->getPrimaryDomain() . "/content/article/" . $content->getSlug();
+            $link = "http://" . $channel->getPrimaryDomain() . "/content/article/" . $content->getSlug();
 
             $this->facebook->post(
                 $this->options["user_id"],

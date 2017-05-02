@@ -20,7 +20,7 @@ use Integrated\Common\Channel\Connector\Adapter\ManifestInterface;
 
 use Integrated\Common\Channel\Exporter\ExportableInterface;
 use Integrated\Bundle\SocialBundle\Social\Twitter\Oauth;
-use Integrated\Bundle\SocialBundle\Form\Type\TokenType;
+use Integrated\Bundle\SocialBundle\Form\Type\TwitterType;
 
 class TwitterConfiguration implements AdapterInterface, ConfigurableInterface, ExportableInterface, ConfigurationInterface, ManifestInterface
 {
@@ -45,7 +45,7 @@ class TwitterConfiguration implements AdapterInterface, ConfigurableInterface, E
     private $oauth;
 
     /**
-     * TwitterAdapter constructor.
+     * TwitterConfiguration constructor.
      * @param Oauth $oauth
      */
     public function __construct(Oauth $oauth)
@@ -54,7 +54,7 @@ class TwitterConfiguration implements AdapterInterface, ConfigurableInterface, E
     }
 
     /**
-     * {@inheritdoc}
+     * @return TwitterConfiguration|ManifestInterface
      */
     public function getManifest()
     {
@@ -66,7 +66,7 @@ class TwitterConfiguration implements AdapterInterface, ConfigurableInterface, E
     }
 
     /**
-     * {@inheritdoc}
+     * @return TwitterConfiguration|ConfigurationInterface
      */
     public function getConfiguration()
     {
@@ -78,7 +78,8 @@ class TwitterConfiguration implements AdapterInterface, ConfigurableInterface, E
     }
 
     /**
-     * {@inheritdoc}
+     * @param OptionsInterface $options
+     * @return TwitterExporter
      */
     public function getExporter(OptionsInterface $options)
     {
@@ -90,15 +91,15 @@ class TwitterConfiguration implements AdapterInterface, ConfigurableInterface, E
     }
 
     /**
-     * {@inheritdoc}
+     * @return mixed
      */
     public function getForm()
     {
-        return TokenType::class;
+        return TwitterType::class;
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName()
     {
@@ -106,7 +107,7 @@ class TwitterConfiguration implements AdapterInterface, ConfigurableInterface, E
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getLabel()
     {
@@ -114,7 +115,7 @@ class TwitterConfiguration implements AdapterInterface, ConfigurableInterface, E
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getDescription()
     {
@@ -122,7 +123,7 @@ class TwitterConfiguration implements AdapterInterface, ConfigurableInterface, E
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getVersion()
     {

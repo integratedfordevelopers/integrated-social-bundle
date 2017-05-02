@@ -45,7 +45,7 @@ class FacebookConfiguration implements AdapterInterface, ConfigurableInterface, 
     private $oauth;
 
     /**
-     * FacebookAdapter constructor.
+     * FacebookConfiguration constructor.
      * @param Oauth $oauth
      */
     public function __construct(Oauth $oauth)
@@ -54,7 +54,7 @@ class FacebookConfiguration implements AdapterInterface, ConfigurableInterface, 
     }
 
     /**
-     * {@inheritdoc}
+     * @return FacebookConfiguration|ManifestInterface
      */
     public function getManifest()
     {
@@ -66,7 +66,7 @@ class FacebookConfiguration implements AdapterInterface, ConfigurableInterface, 
     }
 
     /**
-     * {@inheritdoc}
+     * @return FacebookConfiguration|ConfigurableInterface
      */
     public function getConfiguration()
     {
@@ -78,7 +78,8 @@ class FacebookConfiguration implements AdapterInterface, ConfigurableInterface, 
     }
 
     /**
-     * {@inheritdoc}
+     * @param OptionsInterface $options
+     * @return FacebookExporter
      */
     public function getExporter(OptionsInterface $options)
     {
@@ -90,7 +91,7 @@ class FacebookConfiguration implements AdapterInterface, ConfigurableInterface, 
     }
 
     /**
-     * {@inheritdoc}
+     * @return mixed
      */
     public function getForm()
     {
@@ -98,7 +99,7 @@ class FacebookConfiguration implements AdapterInterface, ConfigurableInterface, 
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName()
     {
@@ -106,7 +107,7 @@ class FacebookConfiguration implements AdapterInterface, ConfigurableInterface, 
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getLabel()
     {
@@ -114,7 +115,7 @@ class FacebookConfiguration implements AdapterInterface, ConfigurableInterface, 
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getDescription()
     {
@@ -122,7 +123,7 @@ class FacebookConfiguration implements AdapterInterface, ConfigurableInterface, 
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getVersion()
     {

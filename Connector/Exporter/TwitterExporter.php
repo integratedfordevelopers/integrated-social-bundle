@@ -36,13 +36,17 @@ class TwitterExporter implements ExporterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param object $content
+     * @param string $state
+     * @param ChannelInterface $channel
      */
     public function export($content, $state, ChannelInterface $channel)
     {
         if ($content instanceof Article) {
             //TODO remove hardcoded URL when INTEGRATED-572 is fixed
-            $tweet = $content->getTitle() . " http://" . $channel->getPrimaryDomain() . "/content/article/" . $content->getSlug();
+            $tweet = $content->getTitle()
+                . " http://" . $channel->getPrimaryDomain()
+                . "/content/article/" . $content->getSlug();
 
             $this->twitter->tweet($this->options["token"], $this->options["token_secret"], $tweet);
         }

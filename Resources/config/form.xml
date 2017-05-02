@@ -6,7 +6,7 @@
 
     <services>
 
-        <service id="integrated_theme.form.type.twitter" class="Integrated\Bundle\SocialBundle\Form\Type\TokenType">
+        <service id="integrated_theme.form.type.twitter" class="Integrated\Bundle\SocialBundle\Form\Type\TwitterType">
             <tag name="form.type" />
         </service>
 

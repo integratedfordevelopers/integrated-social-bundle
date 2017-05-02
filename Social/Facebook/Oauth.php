@@ -14,26 +14,35 @@ namespace Integrated\Bundle\SocialBundle\Social\Facebook;
 use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Facebook;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Integrated\Bundle\SocialBundle\Oauth\OauthInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class Oauth
  * @package Integrated\Bundle\SocialBundle\Social\Facebook
  */
-class Oauth
+class Oauth implements OauthInterface
 {
+    private $app_id;
+
+    private $app_id_secret;
+
     /**
-     * @var ContainerInterface
+     * @var RequestStack
      */
-    private $container;
+    private $requestStack;
 
     /**
      * Oauth constructor.
-     * @param ContainerInterface $container
+     * @param $app_id
+     * @param $app_id_secret
+     * @param RequestStack $requestStack
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct($app_id, $app_id_secret, RequestStack $requestStack)
     {
-        $this->container = $container;
+        $this->app_id = $app_id;
+        $this->app_id_secret = $app_id_secret;
+        $this->requestStack = $requestStack->getCurrentRequest();
     }
 
     /**
@@ -44,17 +53,24 @@ class Oauth
     public function login($connector, $admin_url)
     {
         $fb = new Facebook([
-            'app_id' => $this->container->getParameter("app_id"),
-            'app_secret' => $this->container->getParameter("app_id_secret"),
+            'app_id' => $this->app_id,
+            'app_secret' => $this->app_id_secret,
             'default_graph_version' => 'v2.2'
         ]);
 
         $helper = $fb->getRedirectLoginHelper();
 
-        $permissions = ['publish_actions']; // Optional permissions
+        $this->requestStack = $this->requestStack->createFromGlobals();
+
         $loginUrl = $helper->getLoginUrl(
-            "http://" . $_SERVER["SERVER_NAME"] . ":8080/" . $admin_url . '/connector/config/' . $connector,
-            $permissions
+            $this->requestStack->server->get('REQUEST_SCHEME')
+            . "://"
+            . $this->requestStack->server->get('HTTP_HOST')
+            . "/"
+            . $admin_url
+            . '/connector/config/'
+            . $connector,
+            ['publish_actions']
         );
 
         return $loginUrl;
@@ -68,8 +84,8 @@ class Oauth
     public function callback()
     {
         $fb = new Facebook([
-            'app_id' => $this->container->getParameter("app_id"),
-            'app_secret' => $this->container->getParameter("app_id_secret"),
+            'app_id' => $this->app_id,
+            'app_secret' => $this->app_id_secret,
             'default_graph_version' => 'v2.2',
         ]);
 
@@ -145,8 +161,8 @@ class Oauth
     public function post($userid, $access_token, $link, $message)
     {
         $fb = new Facebook([
-            'app_id' => $this->container->getParameter("app_id"),
-            'app_secret' => $this->container->getParameter("app_id_secret"),
+            'app_id' => $this->app_id,
+            'app_secret' => $this->app_id_secret,
             'default_graph_version' => 'v2.2',
         ]);
 
