@@ -67,7 +67,7 @@ class Oauth implements OauthInterface
             $this->requestStack->server->get('REQUEST_SCHEME')
             . "://"
             . $this->requestStack->server->get('HTTP_HOST')
-            . "/app_dev.php/"
+            . "/"
             . $admin_url
             . '/connector/config/'
             . rawurlencode($connector),
