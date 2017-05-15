@@ -15,6 +15,7 @@ use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Facebook;
 use Integrated\Bundle\SocialBundle\Oauth\OauthInterface;
+use Integrated\Common\Channel\Connector\Config\OptionsInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -66,22 +67,23 @@ class Oauth implements OauthInterface
             $this->requestStack->server->get('REQUEST_SCHEME')
             . "://"
             . $this->requestStack->server->get('HTTP_HOST')
-            . "/"
+            . "/app_dev.php/"
             . $admin_url
             . '/connector/config/'
-            . $connector,
+            . rawurlencode($connector),
             ['publish_actions']
         );
-
+        dump(rawurlencode($connector));
         return $loginUrl;
     }
 
     /**
+     * @param OptionsInterface $options
      * @return array
      * @throws FacebookSDKException
      * @throws \Exception
      */
-    public function callback()
+    public function callback(OptionsInterface $options)
     {
         $fb = new Facebook([
             'app_id' => $this->app_id,
@@ -90,6 +92,8 @@ class Oauth implements OauthInterface
         ]);
 
         $helper = $fb->getRedirectLoginHelper();
+
+        dump($helper);
 
         try {
             $accessToken = $helper->getAccessToken();

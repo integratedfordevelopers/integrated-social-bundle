@@ -13,6 +13,8 @@ namespace Integrated\Bundle\SocialBundle\Social\Twitter;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 use Integrated\Bundle\SocialBundle\Oauth\OauthInterface;
+use Integrated\Common\Channel\Connector\Config\OptionsInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -55,10 +57,10 @@ class Oauth implements OauthInterface
         $this->requestStack = $requestStack->getCurrentRequest();
     }
 
-/**
+    /**
      * @param $connector
      * @param $admin_url
-     * @return string
+     * @return mixed
      * @throws \Abraham\TwitterOAuth\TwitterOAuthException
      * @throws \Exception
      */
@@ -104,10 +106,13 @@ class Oauth implements OauthInterface
     }
 
     /**
-     * @return array|bool
+     * @param OptionsInterface $options
+     * @param null $connectorName
+     * @return bool|string|RedirectResponse
      * @throws \Abraham\TwitterOAuth\TwitterOAuthException
+     * @throws \Exception
      */
-    public function callback()
+    public function callback(OptionsInterface $options, $connectorName = null)
     {
         $oauth_verifier = filter_input(INPUT_GET, 'oauth_verifier');
 
@@ -115,9 +120,12 @@ class Oauth implements OauthInterface
             || empty($this->session->get('oauth_token'))
             || empty($this->session->get('oauth_token_secret'))
         ) {
+            dump("false");
             // something's missing, go and login again
             return false;
+//            return $this->login($connectorName, "admin");
         }
+        dump("true");
 
         // request user token
         $connection = new TwitterOAuth(
@@ -130,7 +138,16 @@ class Oauth implements OauthInterface
         // request user token
         $token = $connection->oauth('oauth/access_token', ['oauth_verifier' => $oauth_verifier]);
 
-        return $token;
+        dump($token);
+//        if ($token !== false) {
+            return $token;
+
+//            $options->set("token", $token["oauth_token"]);
+//            $options->set("token_secret", $token["oauth_token_secret"]);
+//            return "token set";
+//        } else {
+//            return $this->login($connectorName, "admin");
+//        }
     }
 
     /**

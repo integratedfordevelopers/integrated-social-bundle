@@ -9,6 +9,7 @@
  */
 
 namespace Integrated\Bundle\SocialBundle\Oauth;
+use Integrated\Common\Channel\Connector\Config\OptionsInterface;
 
 /**
  * Interface OauthInterface
@@ -17,13 +18,15 @@ namespace Integrated\Bundle\SocialBundle\Oauth;
 interface OauthInterface
 {
     /**
-     * @param string                    $connector
-     * @param string                    $admin_url
+     * @param string $connector
+     * @param string $admin_url
+     * @return string
      */
     public function login($connector, $admin_url);
 
     /**
+     * @param OptionsInterface $options
      * @return mixed
      */
-    public function callback();
+    public function callback(OptionsInterface $options);
 }
