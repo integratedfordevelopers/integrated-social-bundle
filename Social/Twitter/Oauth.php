@@ -138,16 +138,7 @@ class Oauth implements OauthInterface
         // request user token
         $token = $connection->oauth('oauth/access_token', ['oauth_verifier' => $oauth_verifier]);
 
-        dump($token);
-//        if ($token !== false) {
-            return $token;
-
-//            $options->set("token", $token["oauth_token"]);
-//            $options->set("token_secret", $token["oauth_token_secret"]);
-//            return "token set";
-//        } else {
-//            return $this->login($connectorName, "admin");
-//        }
+        return $token;
     }
 
     /**
