@@ -24,9 +24,9 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class Oauth implements OauthInterface
 {
-    private $consumer_key;
+    private $twitter_consumer_key;
 
-    private $consumer_key_secret;
+    private $twitter_consumer_key_secret;
 
     /**
      * @var SessionInterface
@@ -40,19 +40,14 @@ class Oauth implements OauthInterface
 
     /**
      * Oauth constructor.
-     * @param $consumer_key
-     * @param $consumer_key_secret
+     * @param $twitter_consumer_key
+     * @param $twitter_consumer_key_secret
      * @param SessionInterface $session
      * @param RequestStack $requestStack
      */
-    public function __construct(
-        $consumer_key,
-        $consumer_key_secret,
-        SessionInterface $session,
-        RequestStack $requestStack
-    ) {
-        $this->consumer_key = $consumer_key;
-        $this->consumer_key_secret = $consumer_key_secret;
+    public function __construct($twitter_consumer_key, $twitter_consumer_key_secret, SessionInterface $session, RequestStack $requestStack) {
+        $this->twitter_consumer_key = $twitter_consumer_key;
+        $this->twitter_consumer_key_secret = $twitter_consumer_key_secret;
         $this->session = $session;
         $this->requestStack = $requestStack->getCurrentRequest();
     }
@@ -67,8 +62,8 @@ class Oauth implements OauthInterface
     public function login($connector, $admin_url)
     {
         $twitteroauth = new TwitterOAuth(
-            $this->consumer_key,
-            $this->consumer_key_secret
+            $this->twitter_consumer_key,
+            $this->twitter_consumer_key_secret
         );
 
         $this->requestStack = $this->requestStack->createFromGlobals();
@@ -129,8 +124,8 @@ class Oauth implements OauthInterface
 
         // request user token
         $connection = new TwitterOAuth(
-            $this->consumer_key,
-            $this->consumer_key_secret,
+            $this->twitter_consumer_key,
+            $this->twitter_consumer_key_secret,
             $this->session->get('oauth_token'),
             $this->session->get('oauth_token_secret')
         );
@@ -150,8 +145,8 @@ class Oauth implements OauthInterface
     public function tweet($token, $token_secret, $content)
     {
         $twitter = new TwitterOAuth(
-            $this->consumer_key,
-            $this->consumer_key_secret,
+            $this->twitter_consumer_key,
+            $this->twitter_consumer_key_secret,
             $token,
             $token_secret
         );

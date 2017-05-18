@@ -24,9 +24,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class Oauth implements OauthInterface
 {
-    private $app_id;
+    private $facebook_app_id;
 
-    private $app_id_secret;
+    private $facebook_app_id_secret;
 
     /**
      * @var RequestStack
@@ -35,14 +35,14 @@ class Oauth implements OauthInterface
 
     /**
      * Oauth constructor.
-     * @param $app_id
-     * @param $app_id_secret
+     * @param $facebook_app_id
+     * @param $facebook_app_id_secret
      * @param RequestStack $requestStack
      */
-    public function __construct($app_id, $app_id_secret, RequestStack $requestStack)
+    public function __construct($facebook_app_id, $facebook_app_id_secret, RequestStack $requestStack)
     {
-        $this->app_id = $app_id;
-        $this->app_id_secret = $app_id_secret;
+        $this->facebook_app_id = $facebook_app_id;
+        $this->facebook_app_id_secret = $facebook_app_id_secret;
         $this->requestStack = $requestStack->getCurrentRequest();
     }
 
@@ -54,8 +54,8 @@ class Oauth implements OauthInterface
     public function login($connector, $admin_url)
     {
         $fb = new Facebook([
-            'app_id' => $this->app_id,
-            'app_secret' => $this->app_id_secret,
+            'facebook_app_id' => $this->facebook_app_id,
+            'app_secret' => $this->facebook_app_id_secret,
             'default_graph_version' => 'v2.2'
         ]);
 
@@ -86,8 +86,8 @@ class Oauth implements OauthInterface
     public function callback(OptionsInterface $options)
     {
         $fb = new Facebook([
-            'app_id' => $this->app_id,
-            'app_secret' => $this->app_id_secret,
+            'facebook_app_id' => $this->facebook_app_id,
+            'app_secret' => $this->facebook_app_id_secret,
             'default_graph_version' => 'v2.2',
         ]);
 
@@ -165,8 +165,8 @@ class Oauth implements OauthInterface
     public function post($userid, $access_token, $link, $message)
     {
         $fb = new Facebook([
-            'app_id' => $this->app_id,
-            'app_secret' => $this->app_id_secret,
+            'facebook_app_id' => $this->facebook_app_id,
+            'app_secret' => $this->facebook_app_id_secret,
             'default_graph_version' => 'v2.2',
         ]);
 
