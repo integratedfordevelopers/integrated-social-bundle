@@ -45,7 +45,8 @@ class Oauth implements OauthInterface
      * @param SessionInterface $session
      * @param RequestStack $requestStack
      */
-    public function __construct($twitter_consumer_key, $twitter_consumer_key_secret, SessionInterface $session, RequestStack $requestStack) {
+    public function __construct($twitter_consumer_key, $twitter_consumer_key_secret, SessionInterface $session, RequestStack $requestStack)
+    {
         $this->twitter_consumer_key = $twitter_consumer_key;
         $this->twitter_consumer_key_secret = $twitter_consumer_key_secret;
         $this->session = $session;

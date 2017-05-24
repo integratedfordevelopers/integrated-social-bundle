@@ -9,6 +9,7 @@
  */
 
 namespace Integrated\Bundle\SocialBundle\Oauth;
+
 use Integrated\Common\Channel\Connector\Config\OptionsInterface;
 
 /**
