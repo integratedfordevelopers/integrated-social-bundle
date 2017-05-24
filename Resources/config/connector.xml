@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="integrated_twitter.connector.twitter" class="Integrated\Bundle\SocialBundle\Connector\Configuration\TwitterConfiguration">
+            <argument type="service" id="app.twitter_oauth" />
+            <tag name="integrated_channel.connector" />
+        </service>
+
+        <service id="integrated_facebook.connector.facebook" class="Integrated\Bundle\SocialBundle\Connector\Configuration\FacebookConfiguration">
+            <argument type="service" id="app.facebook_oauth" />
+            <tag name="integrated_channel.connector" />
+        </service>
+    </services>
+
+</container>
