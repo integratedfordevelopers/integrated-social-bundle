@@ -115,12 +115,9 @@ class Oauth implements OauthInterface
             || empty($this->session->get('oauth_token'))
             || empty($this->session->get('oauth_token_secret'))
         ) {
-            dump("false");
             // something's missing, go and login again
             return false;
-//            return $this->login($connectorName, "admin");
         }
-        dump("true");
 
         // request user token
         $connection = new TwitterOAuth(

@@ -73,7 +73,7 @@ class Oauth implements OauthInterface
             . rawurlencode($connector),
             ['publish_actions']
         );
-        dump(rawurlencode($connector));
+
         return $loginUrl;
     }
 
@@ -92,8 +92,6 @@ class Oauth implements OauthInterface
         ]);
 
         $helper = $fb->getRedirectLoginHelper();
-
-        dump($helper);
 
         try {
             $accessToken = $helper->getAccessToken();
